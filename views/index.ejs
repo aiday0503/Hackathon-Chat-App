@@ -1,0 +1,109 @@
+<!Doctype html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.js"></script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        const socket = io.connect();
+        const $messageForm = $('#messageForm');
+        const $message = $('#message');
+        const $chat = $('#chatWindow');
+        const $form = $('#form');
+        const $users = $('#users');
+        const $username = $('#username');
+        const $error = $('#error')
+
+        $("#message").emojioneArea({
+            pickerPosition: "bottom",
+            filtersPosition: "bottom",
+            tonesStyle: "checkbox"
+        });
+
+        $form.submit(function(e) {
+            e.preventDefault();
+            socket.emit('new_user', $username.val(), function(data) {
+                if (data) {
+                    $('#namesbox').hide();
+                    $('#mainbox').show();
+                } else {
+                    $error.html("Ups, username is taken");
+
+                }
+            });
+        });
+        socket.on('usernames', function(data) {
+            var text = '';
+            for (var i = 0; i < data.length; i++) {
+                text += data[i] + '<br>';
+            }
+            $users.html(text);
+        })
+
+        $messageForm.submit(function(e) {
+            e.preventDefault();
+            socket.emit('send_message', $message.val());
+            $message.val('');
+            $("#message").data("emojioneArea").setText('');
+            $message.focus();
+        })
+        socket.on('new_message', function(data) {
+            const me = $username.val() === data.user;
+            const user = me ? 'You' : data.user;
+            const msgClass = me ? 'me' : 'others';
+            $chat.append('<div class=' + msgClass + '><span class="msgText"><strong>' + user + '</strong>: ' + data.msg + '<span class="bg"></span></span></div>');
+        });
+
+    })
+</script>
+
+<body>
+    <div class="container">
+        <div id="namesbox">
+            <nav class="navbar navbar-dark bg-primary">
+                <a class="navbar-brand">Welcome to Chat Room</a>
+            </nav>
+            <h3>Create Username:
+            </h3>
+            <div id="error"></div>
+            <form id="form">
+                <input type="text" size="45" id="username">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+            <div class="namesboxBg">
+
+            </div>
+        </div>
+        <div id="mainbox">
+            <div class="img"><img src="https://www.olark.com/img/views/tenthousand/blue-chat-icon.svg" /></div>
+            <div id="chatWrapper">
+                <div id="chatWindow">
+                </div>
+                <form id="messageForm">
+                    <div class="row">
+                        <div class="messageContainer">
+                            <input type="text" size="45" id="message" placeholder="Say Something...">
+                        </div>
+                        <div class="submitContainer">
+                            <input type="submit" value="Submit">
+                        </div>
+                    </div>
+                </form>
+                <div class="namesboxBg"></div>
+            </div>
+            <div id="userWrapper">
+                <h5>Online Users:</h5>
+                <div id="users"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

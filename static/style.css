@@ -1,0 +1,122 @@
+body {
+    background-color: #cccccc;
+    background-image: linear-gradient(rgb(152, 71, 206), rgb(49, 159, 192));
+    height: 700px;
+}
+
+.container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+#chatWrapper {
+    border: 1px solid blue;
+    border-radius: 10px;
+    position: relative;
+    padding: 10px;
+    display: inline-block;
+    width: 70%;
+}
+
+#userWrapper {
+    border: 3px solid #27aedb;
+    border-radius: 11px;
+    background: url('https://www.planwallpaper.com/static/images/violet-vector-leaves-circles-backgrounds-for-powerpoint_PdfkI4q.jpg');
+    opacity: 0.8;
+    padding: 10px;
+    display: inline-block;
+    margin-left: 20px;
+    width: 150px;
+    max-height: 200px;
+    vertical-align: top;
+    color: white;
+    background-repeat: no-repeat, repeat;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+#mainbox {
+    display: none;
+    position: relative;
+}
+
+.img {
+    width: 100px;
+}
+
+#namesbox {
+    border: 3px solid #27aedb;
+    border-radius: 10px;
+    padding: 17px;
+    margin-left: 107px;
+    display: inline-block;
+    position: relative;
+    height: 180px;
+    margin-top: 20px;
+}
+
+.namesboxBg {
+    content: "";
+    background: url('https://www.planwallpaper.com/static/images/violet-vector-leaves-circles-backgrounds-for-powerpoint_PdfkI4q.jpg');
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    background-size: cover;
+}
+
+input {
+    height: 30px;
+}
+
+#chatWindow .me {
+    text-align: right;
+}
+
+#chatWindow div {
+    background-color: transparent;
+    display: block;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+#chatWindow .msgText {
+    border: solid 1px white;
+    border-radius: 10px;
+    padding: 7px;
+    position: relative;
+    color: #222;
+}
+
+#chatWindow .bg {
+    background-color: white;
+    opacity: 1;
+    opacity: 0.6;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+#chatWindow .others .bg {
+    background-color: lightgrey;
+    opacity: 1;
+}
+
+.messageContainer {
+    display: inline-block;
+    width: 400px;
+    padding: 0 10px;
+    vertical-align: middle;
+}
+
+.submitContainer {
+    display: inline-block;
+}
